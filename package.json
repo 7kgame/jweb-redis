@@ -1,6 +1,6 @@
 {
   "name": "jweb-redis",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "redis dao implementation for jweb",
   "main": "build/index.js",
   "typings": "types/index.d.ts",
@@ -9,6 +9,7 @@
     "types/*.d.ts"
   ],
   "scripts": {
+    "build": "tsc",
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,11 +30,12 @@
   },
   "homepage": "https://github.com/7kgame/jweb-redis#readme",
   "dependencies": {
+    "jbean": "x.x.x",
     "redis": "^2.8.0",
-    "@types/redis": "^2.8.10",
     "redis-connection-pool": "^1.7.2"
   },
   "devDependencies": {
+    "@types/redis": "^2.8.10",
     "@types/node": "^10.12.18",
     "tsc": "^1.20150623.0",
     "tslint": "^5.12.1",

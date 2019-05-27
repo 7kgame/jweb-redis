@@ -1,7 +1,8 @@
-import { RedisClient } from 'redis'
+import RedisDao from './dao'
+import RedisRepository from './repository'
 
-export default interface RedisDao {
-  connect (): RedisClient
-  getClient (): RedisClient
-  disconnect (): Promise<void>
+export default RedisDao
+
+export {
+  RedisRepository
 }
