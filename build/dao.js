@@ -21,7 +21,7 @@ const defaultOptions = {
     socket_keepalive: true,
     socket_initialdelay: 0,
     no_ready_check: false,
-    enable_offline_queue: true,
+    enable_offline_queue: false,
     connect_timeout: 3600000
 };
 class RedisDao {
