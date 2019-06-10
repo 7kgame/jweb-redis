@@ -81,5 +81,6 @@ export default class RedisDao {
       })
     })
   }
-
 }
+
+RedisDao['singleton'] = true
