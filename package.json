@@ -1,6 +1,6 @@
 {
   "name": "jweb-redis",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "redis dao implementation for jweb",
   "main": "build/index.js",
   "typings": "types/index.d.ts",
@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "@types/redis": "^2.8.10",
-    "@types/node": "^10.12.18",
+    "@types/node": "^12.0.7",
     "tsc": "^1.20150623.0",
-    "tslint": "^5.12.1",
+    "tslint": "^5.17.0",
     "typescript": "^3.2.2"
   }
 }
