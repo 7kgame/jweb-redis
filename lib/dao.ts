@@ -49,19 +49,23 @@ export default class RedisDao {
     }
   }
 
-  public set (key: string, val: string): Promise<boolean> {
+  public set (key: string | number, val: string): Promise<boolean> {
     return this.sendCommand('set', key, val)
   }
 
-  public get (key: string): Promise<string | Buffer> {
-    return this.sendCommand('get', key)
+  public get (key: string | number, decoder?: Function): Promise<string | Buffer> {
+    if (decoder) {
+      return this.sendCommand('get', key, decoder)
+    } else {
+      return this.sendCommand('get', key)
+    }
   }
 
-  public expire (key: string, seconds: number): Promise<boolean> {
+  public expire (key: string | number, seconds: number): Promise<boolean> {
     return this.sendCommand('expire', key, seconds)
   }
 
-  public del (...key: string[]): Promise<boolean> {
+  public del (...key: (string|number)[]): Promise<boolean> {
     return this.sendCommand.call(this, 'del', ...key)
   }
 
@@ -72,10 +76,17 @@ export default class RedisDao {
         rej('redis client is empty')
         return
       }
+      let decoder = null
+      if (args.length > 0 && typeof args[args.length - 1] === 'function') {
+        decoder = args.pop()
+      }
       client.sendCommand(cmd, args, function (err, data) {
         if (err) {
           rej(err)
         } else {
+          if (decoder) {
+            data = decoder(data)
+          }
           res(data)
         }
       })

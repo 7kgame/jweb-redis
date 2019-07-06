@@ -30,8 +30,13 @@ class RedisRepository {
     set(key, val) {
         return this.getDao(true).sendCommand('set', key, val);
     }
-    get(key) {
-        return this.getDao().sendCommand('get', key);
+    get(key, decoder) {
+        if (decoder) {
+            return this.getDao().sendCommand('get', key, decoder);
+        }
+        else {
+            return this.getDao().sendCommand('get', key);
+        }
     }
     expire(key, seconds) {
         return this.getDao(true).sendCommand('expire', key, seconds);

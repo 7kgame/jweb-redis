@@ -35,19 +35,23 @@ export default class RedisRepository<T> {
     return bean
   }
 
-  public set (key: string, val: string): Promise<boolean> {
+  public set (key: string | number, val: string): Promise<boolean> {
     return this.getDao(true).sendCommand('set', key, val)
   }
 
-  public get (key: string): Promise<string | Buffer> {
-    return this.getDao().sendCommand('get', key)
+  public get (key: string | number, decoder?: Function): Promise<string | Buffer> {
+    if (decoder) {
+      return this.getDao().sendCommand('get', key, decoder)
+    } else {
+      return this.getDao().sendCommand('get', key)
+    }
   }
 
-  public expire (key: string, seconds: number): Promise<boolean> {
+  public expire (key: string | number, seconds: number): Promise<boolean> {
     return this.getDao(true).sendCommand('expire', key, seconds)
   }
 
-  public del (...key: string[]): Promise<boolean> {
+  public del (...key: (string|number)[]): Promise<boolean> {
     return this.getDao(true).sendCommand.call(this, 'del', ...key)
   }
 

@@ -55,8 +55,13 @@ class RedisDao {
     set(key, val) {
         return this.sendCommand('set', key, val);
     }
-    get(key) {
-        return this.sendCommand('get', key);
+    get(key, decoder) {
+        if (decoder) {
+            return this.sendCommand('get', key, decoder);
+        }
+        else {
+            return this.sendCommand('get', key);
+        }
     }
     expire(key, seconds) {
         return this.sendCommand('expire', key, seconds);
@@ -71,11 +76,18 @@ class RedisDao {
                 rej('redis client is empty');
                 return;
             }
+            let decoder = null;
+            if (args.length > 0 && typeof args[args.length - 1] === 'function') {
+                decoder = args.pop();
+            }
             client.sendCommand(cmd, args, function (err, data) {
                 if (err) {
                     rej(err);
                 }
                 else {
+                    if (decoder) {
+                        data = decoder(data);
+                    }
                     res(data);
                 }
             });
